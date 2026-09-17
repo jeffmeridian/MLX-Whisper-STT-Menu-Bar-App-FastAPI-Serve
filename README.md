@@ -134,5 +134,36 @@ curl -X 'POST' \
 {
   "text": "Hello, this is a test transcription."
 }
+```
+
+# Fix dictionaries for Whisper mis-transcriptions
+GERMAN_RESPONSE_FIXES = {
+    "ya": "Ja", "ya.": "Ja.", "yeah": "Ja", "yah": "Ja",
+    "nine": "Nein", "nine.": "Nein.", "9": "Nein", "dock": "Doch",
+    "studiert": "storniert", "Hello": "Hallo", "jep": "Ja", "jo": "Ja",
+    "yep": "Ja", "yes": "Ja", "sure": "Sicher", "bit": "Bitte",
+    "ne": "Nein", "nee": "Nein", "no": "Nein", "studieren": "stornieren",
+    "bye": "Tschüss", "thanks": "Danke", "please": "Bitte"
+}
+
+SPANISH_RESPONSE_FIXES = {
+    "see": "Sí", "sea": "Sí", "c": "Sí", "si": "Sí", "si.": "Sí.",
+    "yes": "Sí", "yeah": "Sí", "sure": "Claro", "okay": "De acuerdo",
+    "no": "No", "nope": "No", "hello": "Hola", "bye": "Adiós",
+    "thanks": "Gracias", "please": "Por favor"
+}
+
+ENGLISH_RESPONSE_FIXES = {
+    "s": "Yes", "es": "Yes", "us": "Yes", "yea": "Yeah", "yah": "Yeah",
+    "yup": "Yep", "c#": "c sharp", "SoapUI": "Soap U I", "JMeter": "J Meter"
+}
+
+LANGUAGE_CONFIG = {
+    "de": {"fixes": GERMAN_RESPONSE_FIXES, "default_prompt": "Hallo, ja, genau, nein, danke, bitte.", "name": "German"},
+    "es": {"fixes": SPANISH_RESPONSE_FIXES, "default_prompt": "Hola, sí, claro, por supuesto, gracias.", "name": "Spanish"},
+    "en": {"fixes": ENGLISH_RESPONSE_FIXES, "default_prompt": "Yes, yeah, sure, absolutely, exact.", "name": "English"}
+}
+
+SUPPORTED_LANGUAGES = ["de", "es", "en"]
 
 ```
