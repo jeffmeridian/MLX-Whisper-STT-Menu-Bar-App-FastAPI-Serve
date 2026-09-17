@@ -1,9 +1,10 @@
-```markdown
+
 # MLX Whisper STT Menu Bar App & FastAPI Server
+URL: https://github.com/jeffmeridian/MLX-Whisper-STT-Menu-Bar-App-FastAPI-Serve
 
 A high-performance, local speech-to-text (STT) transcription server and native macOS menu bar app optimized for Apple Silicon (M1/M2/M3/M4) using Apple's MLX framework, OpenAI's Whisper, FastAPI, and `rumps`.
 
----
+
 
 ## Features
 
