@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/__boot__.py</key>
 		<data>
-		wpyILoPRpqB2uBou4e0DKUTHXII=
+		Z7mcVkVQpqyM25t3bV/bVdx62l0=
 		</data>
 		<key>Resources/__error__.sh</key>
 		<data>
@@ -28,11 +28,16 @@
 			<key>symlink</key>
 			<string>/opt/anaconda3/envs/mlx-whisper/bin/python</string>
 		</dict>
+		<key>Resources/AppIcon.icns</key>
+		<dict>
+			<key>symlink</key>
+			<string>/Users/kai/Development/MLX-Whisper-STT-Menu-Bar-App-FastAPI-Serve/AppIcon.icns</string>
+		</dict>
 		<key>Resources/__boot__.py</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fqhkBdDsj5hft5ijpI28XsU1XoOzEBZWTI5CikDsImU=
+			ZCaFhiUPXs1ILVCFQotc8th9Gu01kzZF7A1Sv16HJRc=
 			</data>
 		</dict>
 		<key>Resources/__error__.sh</key>

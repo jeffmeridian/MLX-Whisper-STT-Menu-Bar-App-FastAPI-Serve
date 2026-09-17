@@ -5,13 +5,18 @@ Usage:
     python setup.py py2app
 """
 
+import sys
 from setuptools import setup
+
+# 1. Raise recursion limit to prevent py2app dependency graph analyzer from crashing
+sys.setrecursionlimit(10000)
 
 APP = ['app.py']
 DATA_FILES = []
 
 OPTIONS = {
     'argv_emulation': False,
+    'iconfile': 'AppIcon.icns',
     'plist': {
         'LSUIElement': True,  # Hides Dock icon; runs as pure menu bar item
         'CFBundleName': "STT Menu Server",
@@ -24,17 +29,19 @@ OPTIONS = {
         'rumps',
         'fastapi',
         'uvicorn',
-        'mlx_whisper',
         'python_multipart',
         'starlette',
-        'mlx',
         'numpy',
     ],
+    # Treat mlx and mlx_whisper as site-packages / framework binaries to stop deep recursion loop
     'includes': [
         'subprocess',
         'threading',
         'tempfile',
+        'mlx',
+        'mlx_whisper',
     ],
+    'site_packages': True,
 }
 
 setup(

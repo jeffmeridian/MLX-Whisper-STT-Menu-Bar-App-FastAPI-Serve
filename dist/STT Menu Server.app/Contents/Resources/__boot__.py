@@ -94,7 +94,7 @@ def _path_inject(paths):
     sys.path[:0] = paths
 
 
-_path_inject(['/Users/kai/Development/mlx-Wisper-STT-Server'])
+_path_inject(['/Users/kai/Development/MLX-Whisper-STT-Menu-Bar-App-FastAPI-Serve'])
 
 
 import re
@@ -147,7 +147,7 @@ def _run():
     exec(compile(source, script, "exec"), globals(), globals())
 
 
-DEFAULT_SCRIPT='/Users/kai/Development/mlx-Wisper-STT-Server/app.py'
+DEFAULT_SCRIPT='/Users/kai/Development/MLX-Whisper-STT-Menu-Bar-App-FastAPI-Serve/app.py'
 SCRIPT_MAP={}
 try:
     _run()

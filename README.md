@@ -1,23 +1,21 @@
-
 # MLX Whisper STT Menu Bar App & FastAPI Server
-URL: https://github.com/jeffmeridian/MLX-Whisper-STT-Menu-Bar-App-FastAPI-Serve
 
-A high-performance, local speech-to-text (STT) transcription server and native macOS menu bar app optimized for Apple Silicon (M1/M2/M3/M4) using Apple's MLX framework, OpenAI's Whisper, FastAPI, and `rumps`.
+A lightweight, high-performance local speech-to-text (STT) transcription server and native macOS menu bar app optimized for Apple Silicon (M1/M2/M3/M4) using Apple's MLX framework, OpenAI's Whisper, FastAPI, and `rumps`.
 
-
+---
 
 ## Features
 
-* **Native macOS Menu Bar App:** Control server execution and settings directly from the menu bar.
-* **Dynamic IP & Port Configuration:** Update host IP and port settings via interactive GUI popups without modifying code.
-* **Dynamic Status Indicators:**
+* **Native macOS Menu Bar App:** Toggle server execution and view dynamic status updates directly from the menu bar.
+* **Dynamic IP & Port Configuration:** Modify target host IP and port settings on the fly using native popup dialogs.
+* **Minimalist Status Icons:**
   * `🎙️` **Off:** Server stopped.
   * `🟢` **Ready:** Server listening and awaiting requests.
-  * `🟠` **Transcribing:** STT model active and processing audio.
-* **Apple Silicon Optimization:** Uses `mlx-whisper` for fast, low-latency execution on M-series chips.
-* **Multi-Language Support & Auto-Correction:** Optimized handling and custom post-transcription fixes for German (`de`), Spanish (`es`), and English (`en`).
-* **Live Logging:** Open real-time stdout/stderr server logs directly in the macOS Console.
-* **Standalone `.app` Packaging:** Build a standalone, dock-less macOS `.app` bundle using `py2app`.
+  * `🟠` **Transcribing:** STT model actively processing audio.
+* **Ultra-Fast Alias Packaging:** Built using `py2app -A` to keep app bundle size under **2 MB** while linking directly to your local Conda environment.
+* **Apple Silicon Optimization:** Powered by `mlx-whisper` for low-latency execution on M-series chips.
+* **Post-Processing Auto-Corrections:** Built-in dictionary fixes for common Whisper mis-transcriptions across German (`de`), Spanish (`es`), and English (`en`).
+* **Live Log Viewing:** One-click shortcut to view stdout/stderr logs in the macOS Console app.
 
 ---
 
@@ -47,47 +45,53 @@ conda activate mlx-whisper
 
 ```
 
-**3. Install dependencies:**
+**3. Install project dependencies:**
 
 ```bash
-pip install mlx mlx-whisper fastapi uvicorn rumps python-multipart py2app
+pip install mlx mlx-whisper fastapi uvicorn rumps python-multipart py2app pillow
 
 ```
+
+---
+
+## Building the Application
+
+**1. Generate the macOS App Icon (`AppIcon.icns`):**
+
+```bash
+python create_icon.py
+
+```
+
+**2. Build the lightweight macOS `.app` bundle in Alias Mode:**
+
+```bash
+python setup.py py2app -A
+
+```
+
+> **Why Alias Mode (`-A`)?**
+> Alias mode links directly to your active Conda environment without duplicating multi-gigabyte C++ binaries (`mlx`, `torch`). This keeps the app footprint tiny (< 2 MB), avoids dependency recursion errors, and reflects source code updates instantly without rebuilding.
 
 ---
 
 ## Usage
 
-### Direct Execution via Terminal
-
-Run the unified application directly from your active Conda environment:
+Launch the compiled app bundle from the terminal or Finder:
 
 ```bash
-python app.py
+open "dist/STT Menu Server.app"
 
 ```
 
-### Building the Native macOS `.app` Bundle
+### Menu Bar Controls
 
-To package the project into a standalone macOS application:
+* **Start / Stop Server:** Toggles the FastAPI Uvicorn background thread.
+* **IP Address:** Opens an input window to configure the host IP (default: `0.0.0.0`).
+* **Port:** Opens an input window to configure the port (default: `8001`).
+* **View Live Logs:** Opens `/tmp/stt_server.log` directly in macOS Console.
 
-```bash
-python setup.py py2app
-
-```
-
-The compiled application will be generated in the `dist/` directory as `STT Menu Server.app`.
-
----
-
-## Menu Bar Controls
-
-* **Start / Stop Server:** Toggles the FastAPI Uvicorn engine thread.
-* **IP Address:** Prompt window to configure host IP (default: `0.0.0.0`).
-* **Port:** Prompt window to configure port (default: `8001`).
-* **View Live Logs:** Opens `/tmp/stt_server.log` in macOS Console.
-
-> **Note:** Configuration options for IP and Port are locked while the server is active to prevent socket binding conflicts. Stop the server before updating these values.
+> **Note:** IP and Port settings are safely locked while the server is running. Click **Stop Server** before making configuration adjustments.
 
 ---
 
@@ -103,7 +107,7 @@ The compiled application will be generated in the `dist/` directory as `STT Menu
 * **URL:** `POST /v1/audio/transcriptions`
 * **Content-Type:** `multipart/form-data`
 * **Form Parameters:**
-* `file` (required): Audio file payload (`.wav`, `.mp3`, `.m4a`, etc.).
+* `file` (required): Audio payload (`.wav`, `.mp3`, `.m4a`, etc.).
 * `model` (optional): Hugging Face MLX model repository (default: `mlx-community/whisper-small-mlx`).
 * `language` (optional): Target language code (`de`, `es`, `en`).
 * `prompt` (optional): Custom initial prompt for Whisper context.
@@ -130,9 +134,5 @@ curl -X 'POST' \
 {
   "text": "Hello, this is a test transcription."
 }
-
-```
-
-```
 
 ```
