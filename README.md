@@ -1,0 +1,1 @@
+# MLX-Whisper-STT-Menu-Bar-App-FastAPI-Serve
